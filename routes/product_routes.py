@@ -12,7 +12,7 @@ class ProductAPI(MethodView):
         prods = ProductService.get_all_products()
         return jsonify(products_schema.dump(prods)), 200
     
-    @admin_required()
+    @admin_required
     def post(self):
         data = request.get_json()
         product = ProductService.create_product(data)

@@ -8,7 +8,7 @@ class AuthService:
     @staticmethod
     def register_user(data):
         from schemas import user_schema
-        user = user_schema.load(data)
+        user = user_schema.load(data)   #deserializes the input
         if User.query.filter_by(username=user.username).first():
             raise ValueError("Username already exists")
         user.password = bcrypt.generate_password_hash(user.password).decode('utf-8')

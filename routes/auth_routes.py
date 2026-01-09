@@ -14,7 +14,7 @@ class RegisterAPI(MethodView):
             user = AuthService.register_user(data)
             return jsonify({
                 "message": "User created",
-                "user": user_schema.dump(user)
+                "user": user_schema.dump(user)     #serializes
             }), 201
         except ValidationError as err:
             return jsonify(err.messages), 400

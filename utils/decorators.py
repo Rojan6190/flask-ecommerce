@@ -1,17 +1,15 @@
 # utils/decorators.py
 from functools import wraps
+from flask_jwt_extended import jwt_required, get_jwt
 from flask import jsonify
-from flask_jwt_extended import get_jwt, jwt_required
 
-def admin_required():
-    def wrapper(fn):
-        @wraps(fn)
-        @jwt_required()
-        def decorator(*args, **kwargs):
-            claims = get_jwt()
-            if claims.get("is_admin"):
-                return fn(*args, **kwargs)
-            else:
-                return jsonify(msg="Admins only!"), 403
-        return decorator
+def admin_required(fn):
+    """Decorator to require admin privileges"""
+    @wraps(fn)
+    @jwt_required()
+    def wrapper(*args, **kwargs):  
+        claims = get_jwt()
+        if not claims.get('is_admin'):
+            return jsonify({"error": "Admin access required"}), 403
+        return fn(*args, **kwargs) 
     return wrapper

@@ -1,5 +1,5 @@
 from flask_marshmallow import Marshmallow
-from marshmallow import fields, validate, post_dump
+from marshmallow import fields, validate, post_dump, validates_schema, ValidationError
 from models import User, Product, Category, CartItem, Offer, db
 from datetime import datetime, timezone
 
@@ -38,10 +38,21 @@ class OfferSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         sqla_session = db.session
     
-    discount_percent = fields.Float(required=True, validate=validate.Range(min=0, max=20))
+    discount_percent = fields.Float(required=True, validate=validate.Range(min=0, max=50))
     start_time = fields.DateTime(format='iso')
     end_time = fields.DateTime(format='iso')
-
+   
+    @validates_schema
+    def validate_dates(self, data, **kwargs):
+        """
+        Ensure start_time < end_time
+        """
+        start = data.get("start_time")
+        end = data.get("end_time")
+        
+        if start and end and start >= end:
+            raise ValidationError("end_time must be after start_time")
+        
 class ProductSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Product
@@ -50,6 +61,8 @@ class ProductSchema(ma.SQLAlchemyAutoSchema):
         sqla_session = db.session
     
     price = fields.Float(validate=validate.Range(min=0.01))
+    
+    #dump only->serialization (output)
     category = ma.Nested(CategorySchema, only=("name",), dump_only=True)
     offer = ma.Nested(OfferSchema, only=("name", "discount_percent"), dump_only=True)
     
