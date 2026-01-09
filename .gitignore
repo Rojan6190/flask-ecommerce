@@ -63,3 +63,9 @@ htmlcov/
 # Flask specific
 instance/
 .mypy_cache/
+
+#file uploads
+static/*.jpg
+static/*.png
+static/*.jpeg
+
