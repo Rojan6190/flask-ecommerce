@@ -1,9 +1,9 @@
 markdown
-# 🛒 Flask E-Commerce API
+# Flask E-Commerce API
 
 A full-featured RESTful API for an e-commerce platform built with Flask, featuring user authentication, product management, shopping cart, offers, and image uploads.
 
-## 🚀 Features
+## Features
 
 - **User Authentication**: JWT-based auth with access and refresh tokens
 - **Product Management**: CRUD operations with category filtering
@@ -12,7 +12,7 @@ A full-featured RESTful API for an e-commerce platform built with Flask, featuri
 - **Image Uploads**: Profile pictures and product images
 - **Admin Panel**: Admin-only endpoints for managing products and offers
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Framework**: Flask 3.x
 - **Database**: SQLAlchemy (SQLite for dev, PostgreSQL-ready)
@@ -21,7 +21,7 @@ A full-featured RESTful API for an e-commerce platform built with Flask, featuri
 - **Password Hashing**: Flask-Bcrypt
 - **File Handling**: Werkzeug
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 - Python 3.8+
